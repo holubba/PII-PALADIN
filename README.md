@@ -11,35 +11,20 @@ PII-PALADIN is a Node.js package designed to detect and censor Personally Identi
 
 ---
 
-## Setup and Installation
+## Installation
 
-This package includes the necessary model and WASM files directly within the repository, tracked by Git Large File Storage (LFS). Ensure you have Git LFS installed on your system before cloning.
-
-### Step 1: Clone the Repository
-
-First, clone the repository to your local machine. Git LFS will automatically download the large model files during cloning.
+Install the package using npm:
 
 ```bash
-git clone git@github.com:jeeem/PII-PALADIN.git
-cd PII-PALADIN
+npm install pii-paladin
 ```
-
-### Step 2: Install Node.js Dependencies
-
-Once the repository is cloned and Git LFS has downloaded the large files, install the Node.js package dependencies:
-
-```bash
-npm install
-```
-
----
 
 ## Usage
 
 The package exports a single async function: `censorPII(input)`.
 
 ```javascript
-import { censorPII } from './index.js';
+import { censorPII } from 'pii-paladin';
 
 const text = "John Doe, CEO of Acme Inc., lives in New York and can be reached at 123-456-7890. His SSN is 123-45-6789. His email is john.doe@example.com.";
 

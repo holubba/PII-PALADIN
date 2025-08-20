@@ -1,0 +1,13 @@
+node_modules/
+npm-debug.log
+.jest/
+.env
+.idea/
+.vscode/
+.DS_Store
+example.js
+test/
+__mocks__/
+jest.config.js
+tsconfig.json
+eslint.config.js

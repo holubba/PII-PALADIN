@@ -4,6 +4,12 @@
   "description": "A Node.js package to censor PII in a string using a hybrid NER and Regex approach.",
   "main": "index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "models",
+    "wasm",
+    "index.js"
+  ],
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
@@ -22,6 +28,10 @@
   ],
   "author": "Gemini",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeeem/PII-PALADIN.git"
+  },
   "devDependencies": {
     "jest": "^29.0.0",
     "typescript": "^5.0.0",
