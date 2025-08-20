@@ -1,0 +1,40 @@
+{
+  "name": "pii-paladin",
+  "version": "1.0.0",
+  "description": "A Node.js package to censor PII in a string using a hybrid NER and Regex approach.",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "start": "node example.js",
+    "build": "tsc",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "pii",
+    "ner",
+    "transformers",
+    "offline",
+    "censor",
+    "regex"
+  ],
+  "author": "Gemini",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.0",
+    "@eslint/js": "^8.0.0",
+    "globals": "^15.0.0",
+    "@babel/eslint-parser": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0"
+  },
+  "dependencies": {
+    "@xenova/transformers": "^2.17.1"
+  }
+}
