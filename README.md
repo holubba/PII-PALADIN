@@ -13,63 +13,24 @@ PII-PALADIN is a Node.js package designed to detect and censor Personally Identi
 
 ## Setup and Installation
 
-This package requires a one-time setup to download the offline NER model and WASM files. Please follow these steps in order.
+This package includes the necessary model and WASM files directly within the repository, tracked by Git Large File Storage (LFS). Ensure you have Git LFS installed on your system before cloning.
 
-### Step 1: Install Dependencies
+### Step 1: Clone the Repository
 
-First, install the necessary npm packages. This command reads your `package.json` and downloads the required libraries, including `@xenova/transformers` and its dependency `onnxruntime-web`.
+First, clone the repository to your local machine. Git LFS will automatically download the large model files during cloning.
+
+```bash
+git clone git@github.com:jeeem/PII-PALADIN.git
+cd PII-PALADIN
+```
+
+### Step 2: Install Node.js Dependencies
+
+Once the repository is cloned and Git LFS has downloaded the large files, install the Node.js package dependencies:
 
 ```bash
 npm install
 ```
-
-### Step 2: Create Asset Directories
-
-Create the necessary directories for your offline assets. The model files need to be placed in a specific nested structure.
-
-```bash
-mkdir -p models/Xenova/bert-base-NER wasm
-```
-
-### Step 3: Download the NER Model
-
-We will use the `Xenova/bert-base-NER` model. Download its configuration files and the quantized ONNX model file.
-
-**Instructions:**
-
-1.  Go to the main model repository page: [https://huggingface.co/Xenova/bert-base-NER/tree/main](https://huggingface.co/Xenova/bert-base-NER/tree/main)
-2.  Download the following configuration and tokenizer files from the root directory and place them in the `models/Xenova/bert-base-NER/` folder:
-    -   `config.json`
-    -   `tokenizer.json`
-    -   `tokenizer_config.json`
-    -   `special_tokens_map.json`
-3.  Next, click on the `onnx` directory.
-4.  From inside the `onnx` directory, download the quantized model file and place it in the `models/Xenova/bert-base-NER/onnx/` folder:
-    -   `model_quantized.onnx`
-
-Your `models/` directory structure should now look like this:
-
-```
-models/
-└── Xenova/
-    └── bert-base-NER/
-        ├── config.json
-        ├── special_tokens_map.json
-        ├── tokenizer.json
-        ├── tokenizer_config.json
-        └── onnx/
-            └── model_quantized.onnx
-```
-
-### Step 4: Copy the WASM Binaries
-
-Now that you have run `npm install`, the `onnxruntime-web` package is in your `node_modules` directory. Run the following command to copy the necessary WASM binaries into your local `wasm/` directory.
-
-```bash
-cp node_modules/onnxruntime-web/dist/*.wasm wasm/
-```
-
-After running the command, verify that your `wasm/` directory contains files like `ort-wasm.wasm`, `ort-wasm-threaded.wasm`, and `ort-wasm-simd.wasm`.
 
 ---
 
