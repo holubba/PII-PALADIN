@@ -48,6 +48,18 @@ async function main() {
 main();
 ```
 
+### Example Input/Output
+
+**Input:**
+```
+Contact John Doe at john.doe@example.com or (123) 456-7890. He lives at 123 Main St, Anytown, and his SSN is 987-65-4321.
+```
+
+**Output:**
+```
+Contact [CENSORED] at [CENSORED] or [CENSORED]. He lives at [CENSORED], [CENSORED], and his SSN is [CENSORED].
+```
+
 ---
 
 ## API Reference
