@@ -1,6 +1,6 @@
 {
   "name": "pii-paladin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Node.js package to censor PII in a string using a hybrid NER and Regex approach.",
   "main": "index.js",
   "types": "dist/index.d.ts",
