@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PII-PALADIN Browser Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #28a745;
+            margin-top: 10px;
+        }
+        .loading {
+            color: #007bff;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>PII-PALADIN Browser Example</h1>
+    
+    <div class="info">
+        <h3>📋 Setup Instructions</h3>
+        <p>To use this example, you need to:</p>
+        <ol>
+            <li>Serve this HTML file from a web server (not file://)</li>
+            <li>Ensure the <code>models/</code> and <code>wasm/</code> directories are accessible</li>
+            <li>Include the PII-PALADIN browser script</li>
+        </ol>
+        <p><strong>Note:</strong> The model files (~90MB) will be downloaded on first use.</p>
+    </div>
+
+    <div class="container">
+        <h3>Input Text</h3>
+        <p>Enter text containing PII to test the censoring functionality:</p>
+        <textarea id="inputText" placeholder="Enter text with PII here...">Hello, my name is John Doe and my email is john.doe@example.com. My SSN is 123-45-6789 and I work at Acme Corp in New York. You can reach me at (555) 123-4567.</textarea>
+        
+        <button id="censorBtn" onclick="censorText()">Censor PII</button>
+        <button id="clearBtn" onclick="clearResults()">Clear Results</button>
+    </div>
+
+    <div class="container">
+        <h3>Results</h3>
+        <div id="results"></div>
+    </div>
+
+    <div class="container">
+        <h3>Test Cases</h3>
+        <p>Try these test cases:</p>
+        <button onclick="loadTest('person')">Person Names</button>
+        <button onclick="loadTest('email')">Email Addresses</button>
+        <button onclick="loadTest('ssn')">Social Security Numbers</button>
+        <button onclick="loadTest('phone')">Phone Numbers</button>
+        <button onclick="loadTest('credit')">Credit Card Numbers</button>
+        <button onclick="loadTest('mixed')">Mixed PII</button>
+    </div>
+
+    <script type="module">
+        // Import the browser-compatible version
+        import { censorPII } from './index.browser.js';
+
+        // Make censorPII available globally
+        window.censorPII = censorPII;
+
+        // Test cases
+        window.testCases = {
+            person: "My name is John Doe and I work with Jane Smith. Alice Wonderland is also on our team.",
+            email: "Contact us at info@example.com or support@company.org. For sales, email sales@business.net",
+            ssn: "My SSN is 123-45-6789. Her SSN is 987-65-4321. Another one: 555-12-3456",
+            phone: "Call me at (555) 123-4567 or 555-987-6543. My office number is 555-111-2222",
+            credit: "My card number is 1234-5678-9012-3456. Exp: 12/25. Another card: 9876-5432-1098-7654",
+            mixed: "John Doe (SSN: 123-45-6789) works at Acme Corp. Email: john@acme.com, Phone: (555) 123-4567. Lives in New York."
+        };
+
+        window.loadTest = function(type) {
+            document.getElementById('inputText').value = window.testCases[type] || '';
+        };
+
+        window.clearResults = function() {
+            document.getElementById('results').innerHTML = '';
+        };
+
+        window.censorText = async function() {
+            const inputText = document.getElementById('inputText').value;
+            const resultsDiv = document.getElementById('results');
+            const censorBtn = document.getElementById('censorBtn');
+
+            if (!inputText.trim()) {
+                resultsDiv.innerHTML = '<div class="error">Please enter some text to censor.</div>';
+                return;
+            }
+
+            // Disable button and show loading
+            censorBtn.disabled = true;
+            censorBtn.textContent = 'Processing...';
+            resultsDiv.innerHTML = '<div class="loading">Loading model and processing text...</div>';
+
+            try {
+                const startTime = performance.now();
+                const censoredText = await censorPII(inputText);
+                const endTime = performance.now();
+                const processingTime = (endTime - startTime).toFixed(2);
+
+                resultsDiv.innerHTML = `
+                    <div class="result">
+                        <h4>Original Text:</h4>
+                        <p>${inputText}</p>
+                        <h4>Censored Text:</h4>
+                        <p>${censoredText}</p>
+                        <p><small>Processing time: ${processingTime}ms</small></p>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <h4>Error:</h4>
+                        <p>${error.message}</p>
+                        <p><small>Make sure the model files are accessible and you're running from a web server.</small></p>
+                    </div>
+                `;
+            } finally {
+                // Re-enable button
+                censorBtn.disabled = false;
+                censorBtn.textContent = 'Censor PII';
+            }
+        };
+
+        // Initialize with a test case
+        window.loadTest('mixed');
+    </script>
+</body>
+</html>

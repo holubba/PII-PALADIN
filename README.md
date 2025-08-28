@@ -1,6 +1,6 @@
 # PII-PALADIN
 
-PII-PALADIN is a Node.js package designed to detect and censor Personally Identifiable Information (PII) from a string. It uses a hybrid approach combining a pre-trained Named Entity Recognition (NER) model with regular expressions for comprehensive and accurate PII detection.
+PII-PALADIN is a Node.js and browser package designed to detect and censor Personally Identifiable Information (PII) from a string. It uses a hybrid approach combining a pre-trained Named Entity Recognition (NER) model with regular expressions for comprehensive and accurate PII detection.
 
 ## Features
 
@@ -22,6 +22,8 @@ npm install pii-paladin
 ```
 
 ### Usage
+
+#### Node.js
 
 This package is an ES module, so you should use `import` syntax in your project. Make sure your project's `package.json` has `"type": "module"`.
 
@@ -47,6 +49,47 @@ async function main() {
 
 main();
 ```
+
+#### Browser
+
+For browser usage, you can import the browser-compatible version:
+
+```javascript
+import { censorPII } from 'pii-paladin/index.browser.js';
+
+async function censorText() {
+  const text = "Contact John Doe at john.doe@example.com or (123) 456-7890.";
+  
+  try {
+    const censoredText = await censorPII(text);
+    console.log(censoredText);
+    // Output: "Contact [CENSORED] at [CENSORED] or [CENSORED]."
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+```
+
+**Important Browser Setup Requirements:**
+
+1. **Web Server**: The HTML file must be served from a web server (not opened as `file://`)
+2. **Model Files**: Ensure the `models/` and `wasm/` directories are accessible from your web server
+3. **CORS**: If serving from a different domain, ensure CORS headers are properly configured
+4. **File Size**: The model files are ~90MB and will be downloaded on first use
+
+**Browser Example:**
+See `example.browser.html` for a complete working example.
+
+**Quick Start for Browser Testing:**
+```bash
+# Start the development server
+npm run serve
+
+# Or specify a custom port
+node serve.js 8080
+```
+
+Then open http://localhost:3000 in your browser.
 
 ### Example Input/Output
 
