@@ -1,17 +1,53 @@
 # PII-PALADIN
 
-PII-PALADIN is a Node.js and browser package designed to detect and censor Personally Identifiable Information (PII) from a string. It uses a hybrid approach combining a pre-trained Named Entity Recognition (NER) model with regular expressions for comprehensive and accurate PII detection.
+⚠️ **IMPORTANT: This is a NODE.JS ONLY package!** ⚠️
 
-## Features
+**This package will NOT work in your React, Next.js, Vue, or any other frontend framework!** 
 
--	**Hybrid PII Detection**: Combines the contextual understanding of an NER model for names, organizations, and locations with the precision of regex for structured PII like SSN, credit cards, emails, and phone numbers.
--	**Offline Inference**: All model and regex processing is performed locally, ensuring no internet access is required at runtime.
--	**Comprehensive Coverage**: Aims for high accuracy across a wide range of PII types.
--	**Censoring Style**: Replaces detected PII with `[CENSORED]`.
+This package uses a **NER (Named Entity Recognition) language model** that requires Node.js server-side execution. It will **NOT** work in browsers, client-side JavaScript, or frontend frameworks.
+
+## 🚫 What This Package WON'T Work In:
+
+- ❌ **React** (client-side)
+- ❌ **Next.js** (client-side components)
+- ❌ **Vue.js** (client-side)
+- ❌ **Angular** (client-side)
+- ❌ **Browser JavaScript**
+- ❌ **Frontend frameworks**
+- ❌ **Client-side applications**
+
+## ✅ What This Package WILL Work In:
+
+- ✅ **Node.js servers**
+- ✅ **Express.js applications**
+- ✅ **Next.js API routes** (server-side only)
+- ✅ **Backend services**
+- ✅ **Command-line tools**
+- ✅ **Server-side applications**
 
 ---
 
-## Getting Started
+## 📋 What It Does
+
+PII-PALADIN is a **Node.js package** designed to detect and censor Personally Identifiable Information (PII) from a string. It uses a hybrid approach combining a pre-trained Named Entity Recognition (NER) model with regular expressions for comprehensive and accurate PII detection.
+
+## 🎯 Features
+
+- **Hybrid PII Detection**: Combines the contextual understanding of an NER model for names, organizations, and locations with the precision of regex for structured PII like SSN, credit cards, emails, and phone numbers.
+- **Offline Inference**: All model and regex processing is performed locally, ensuring no internet access is required at runtime.
+- **Comprehensive Coverage**: Aims for high accuracy across a wide range of PII types.
+- **Censoring Style**: Replaces detected PII with `[CENSORED]`.
+- **Server-Side Only**: Designed specifically for Node.js environments.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** (version 14 or higher)
+- **npm** or **yarn**
+- **Server environment** (not browser)
 
 ### Installation
 
@@ -22,8 +58,6 @@ npm install pii-paladin
 ```
 
 ### Usage
-
-#### Node.js
 
 This package is an ES module, so you should use `import` syntax in your project. Make sure your project's `package.json` has `"type": "module"`.
 
@@ -50,47 +84,6 @@ async function main() {
 main();
 ```
 
-#### Browser
-
-For browser usage, you can import the browser-compatible version:
-
-```javascript
-import { censorPII } from 'pii-paladin/index.browser.js';
-
-async function censorText() {
-  const text = "Contact John Doe at john.doe@example.com or (123) 456-7890.";
-  
-  try {
-    const censoredText = await censorPII(text);
-    console.log(censoredText);
-    // Output: "Contact [CENSORED] at [CENSORED] or [CENSORED]."
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-```
-
-**Important Browser Setup Requirements:**
-
-1. **Web Server**: The HTML file must be served from a web server (not opened as `file://`)
-2. **Model Files**: Ensure the `models/` and `wasm/` directories are accessible from your web server
-3. **CORS**: If serving from a different domain, ensure CORS headers are properly configured
-4. **File Size**: The model files are ~90MB and will be downloaded on first use
-
-**Browser Example:**
-See `example.browser.html` for a complete working example.
-
-**Quick Start for Browser Testing:**
-```bash
-# Start the development server
-npm run serve
-
-# Or specify a custom port
-node serve.js 8080
-```
-
-Then open http://localhost:3000 in your browser.
-
 ### Example Input/Output
 
 **Input:**
@@ -105,30 +98,49 @@ Contact [CENSORED] at [CENSORED] or [CENSORED]. He lives at [CENSORED], [CENSORE
 
 ---
 
-## API Reference
+## 🔧 API Reference
 
 ### `censorPII(input: string): Promise<string>`
 
 Censors detected Personally Identifiable Information (PII) in the input string.
 
-*	`input`: The string to be censored.
-*	**Returns**: A `Promise` that resolves to the censored string.
+- **`input`**: The string to be censored.
+- **Returns**: A `Promise` that resolves to the censored string.
 
 ---
 
-## Limitations
+## ⚠️ Limitations
 
 While this package aims for high accuracy, it's important to understand its current limitations:
 
-*	**Model-Specific PII Types**: The underlying `Xenova/bert-base-NER` model is primarily trained to detect Person (PER), Organization (ORG), Location (LOC), and Miscellaneous (MISC) entities. It does **not** reliably detect general dates, or other descriptive PII that doesn't fit a specific regex pattern.
-*	**Regex Specificity**: Regex patterns are precise but can be brittle. Variations in formatting (e.g., unusual phone number formats, driver's license numbers from different states/countries) might not be detected.
-*	**Biometric and Medical Data**: Detection of biometric data (e.g., fingerprints, retinal scans) and highly unstructured medical record information is beyond the scope of this package's current implementation.
-*	**Contextual Ambiguity**: While the NER model provides some context, it might not always correctly identify PII if the context is highly ambiguous or requires deep semantic understanding.
+- **Server-Side Only**: This package **cannot** run in browsers or frontend frameworks.
+- **Model-Specific PII Types**: The underlying `Xenova/bert-base-NER` model is primarily trained to detect Person (PER), Organization (ORG), Location (LOC), and Miscellaneous (MISC) entities. It does **not** reliably detect general dates, or other descriptive PII that doesn't fit a specific regex pattern.
+- **Regex Specificity**: Regex patterns are precise but can be brittle. Variations in formatting (e.g., unusual phone number formats, driver's license numbers from different states/countries) might not be detected.
+- **Biometric and Medical Data**: Detection of biometric data (e.g., fingerprints, retinal scans) and highly unstructured medical record information is beyond the scope of this package's current implementation.
+- **Contextual Ambiguity**: While the NER model provides some context, it might not always correctly identify PII if the context is highly ambiguous or requires deep semantic understanding.
 
 For PII types not covered by this package, or for higher accuracy in specific domains, a more specialized NER model or a dedicated PII detection library might be necessary.
 
 ---
 
-## Contributing
+## 🤔 "But I want to use this in my React/Next.js app!"
+
+If you need PII censoring in a frontend application, you have a few options:
+
+1. **Use this package in your backend API** and call it from your frontend
+2. **Use a different, browser-compatible PII detection library**
+3. **Implement a simple regex-based solution for basic PII detection**
+
+**Remember**: This package uses a large language model (~90MB) and requires Node.js APIs that don't exist in browsers.
+
+---
+
+## 📚 Contributing
 
 This project is open source and contributions are welcome. If you want to contribute, please check out the [GitHub repository](https://github.com/jeeem/PII-PALADIN).
+
+---
+
+## 📄 License
+
+ISC License

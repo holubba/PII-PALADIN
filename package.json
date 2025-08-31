@@ -1,24 +1,19 @@
 {
   "name": "pii-paladin",
-  "version": "1.1.0",
-  "description": "A Node.js and browser package to censor PII in a string using a hybrid NER and Regex approach with comprehensive test coverage.",
+  "version": "2.0.0",
+  "description": "A Node.js package to censor PII in a string using a hybrid NER and Regex approach with comprehensive test coverage.",
   "main": "index.js",
-  "browser": "index.browser.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
     "models",
     "wasm",
-    "index.js",
-    "index.browser.js",
-    "example.browser.html",
-    "serve.js"
+    "index.js"
   ],
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "start": "node example.js",
-    "serve": "node serve.js",
     "build": "tsc",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -30,9 +25,6 @@
     "offline",
     "censor",
     "regex",
-    "browser",
-    "frontend",
-    "wasm",
     "privacy"
   ],
   "author": "Gemini",
