@@ -1,7 +1,7 @@
 {
   "name": "pii-paladin",
-  "version": "2.0.0",
-  "description": "A Node.js package to censor PII in a string using a hybrid NER and Regex approach with comprehensive test coverage.",
+  "version": "2.0.1",
+  "description": "A Node.js package to censor PII in a string using a hybrid NER and Regex approach with comprehensive test coverage. SERVER-SIDE ONLY - will not work in browsers or frontend frameworks. For browser support, see pii-paladin-lite.",
   "main": "index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -25,7 +25,10 @@
     "offline",
     "censor",
     "regex",
-    "privacy"
+    "privacy",
+    "server-side",
+    "ml",
+    "machine-learning"
   ],
   "author": "Gemini",
   "license": "ISC",

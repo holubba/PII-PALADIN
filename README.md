@@ -128,10 +128,54 @@ For PII types not covered by this package, or for higher accuracy in specific do
 If you need PII censoring in a frontend application, you have a few options:
 
 1. **Use this package in your backend API** and call it from your frontend
-2. **Use a different, browser-compatible PII detection library**
+2. **Use [PII-PALADIN LITE](https://www.npmjs.com/package/pii-paladin-lite) - our companion package for browser environments**
 3. **Implement a simple regex-based solution for basic PII detection**
 
 **Remember**: This package uses a large language model (~90MB) and requires Node.js APIs that don't exist in browsers.
+
+### 🚀 **Need Browser Support? Try PII-PALADIN LITE!**
+
+We've created a companion package specifically for browser environments: **[PII-PALADIN LITE](https://www.npmjs.com/package/pii-paladin-lite)**
+
+**PII-PALADIN LITE Features:**
+- ✅ **Browser Compatible** - Works in React, Next.js, Vue, Angular, and any browser
+- ✅ **Lightning Fast** - Pure regex-based, no ML models
+- ✅ **Tiny Bundle** - Only ~5KB vs ~90MB for this package
+- ✅ **Zero Configuration** - Just 2 lines of code to get started
+- ✅ **Universal Support** - Works everywhere, no setup required
+
+**Perfect for:**
+- Frontend applications
+- Browser extensions
+- React/Next.js components
+- Quick development and prototyping
+- When you need "good enough" accuracy with maximum speed
+
+**Install:** `npm install pii-paladin-lite`
+
+### 📊 **Package Comparison**
+
+| Feature | **PII-PALADIN** (This Package) | **PII-PALADIN LITE** |
+|---------|----------------------------------|----------------------|
+| **Environment** | Node.js only | Browser + Node.js |
+| **Bundle Size** | ~90MB (ML models) | ~5KB (regex only) |
+| **Speed** | Slower (ML inference) | Lightning fast |
+| **Accuracy** | Higher (ML + regex) | Good (regex only) |
+| **Setup** | Complex (model files) | Zero configuration |
+| **Use Case** | Production/accuracy | Development/speed |
+| **Lines of Code** | Complex setup | Just 2 lines! |
+
+**Choose PII-PALADIN when you need:**
+- Maximum accuracy for production
+- Advanced ML-based detection
+- Can handle 90MB bundle size
+- Server-side processing
+
+**Choose PII-PALADIN LITE when you need:**
+- Browser compatibility
+- Lightning-fast performance
+- Tiny bundle size
+- Quick development setup
 
 ---
 
