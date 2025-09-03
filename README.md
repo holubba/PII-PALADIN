@@ -129,41 +129,64 @@ If you need PII censoring in a frontend application, you have a few options:
 
 1. **Use this package in your backend API** and call it from your frontend
 2. **Use [PII-PALADIN LITE](https://www.npmjs.com/package/pii-paladin-lite) - our companion package for browser environments**
-3. **Implement a simple regex-based solution for basic PII detection**
+3. **Use [PII-PALADIN INTERNATIONAL](https://www.npmjs.com/package/pii-paladin-international) - our enterprise-grade global compliance package**
+4. **Implement a simple regex-based solution for basic PII detection**
 
 **Remember**: This package uses a large language model (~90MB) and requires Node.js APIs that don't exist in browsers.
 
-### 🚀 **Need Browser Support? Try PII-PALADIN LITE!**
+---
 
-We've created a companion package specifically for browser environments: **[PII-PALADIN LITE](https://www.npmjs.com/package/pii-paladin-lite)**
+## 🌍 **The PII PALADIN Ecosystem**
 
-**PII-PALADIN LITE Features:**
-- ✅ **Browser Compatible** - Works in React, Next.js, Vue, Angular, and any browser
-- ✅ **Lightning Fast** - Pure regex-based, no ML models
-- ✅ **Tiny Bundle** - Only ~5KB vs ~90MB for this package
-- ✅ **Zero Configuration** - Just 2 lines of code to get started
-- ✅ **Universal Support** - Works everywhere, no setup required
+We've created a comprehensive suite of PII detection packages to meet different needs:
+
+### 🚀 **PII-PALADIN LITE** - Browser & Fast Development
+**[npm package](https://www.npmjs.com/package/pii-paladin-lite)**
 
 **Perfect for:**
-- Frontend applications
+- Frontend applications (React, Next.js, Vue, Angular)
 - Browser extensions
-- React/Next.js components
 - Quick development and prototyping
 - When you need "good enough" accuracy with maximum speed
 
-**Install:** `npm install pii-paladin-lite`
+**Features:**
+- ✅ **Browser Compatible** - Works everywhere
+- ✅ **Lightning Fast** - Pure regex-based, no ML models
+- ✅ **Tiny Bundle** - Only ~5KB
+- ✅ **Zero Configuration** - Just 2 lines of code to get started
 
-### 📊 **Package Comparison**
+### 🌍 **PII-PALADIN INTERNATIONAL** - Global Compliance
+**[npm package](https://www.npmjs.com/package/pii-paladin-international)**
 
-| Feature | **PII-PALADIN** (This Package) | **PII-PALADIN LITE** |
-|---------|----------------------------------|----------------------|
-| **Environment** | Node.js only | Browser + Node.js |
-| **Bundle Size** | ~90MB (ML models) | ~5KB (regex only) |
-| **Speed** | Slower (ML inference) | Lightning fast |
-| **Accuracy** | Higher (ML + regex) | Good (regex only) |
-| **Setup** | Complex (model files) | Zero configuration |
-| **Use Case** | Production/accuracy | Development/speed |
-| **Lines of Code** | Complex setup | Just 2 lines! |
+**Perfect for:**
+- Global PII detection across 60+ countries
+- Enterprise compliance (GDPR, CCPA, LGPD, etc.)
+- Multi-language support with cultural context awareness
+- Professional-grade security and accuracy
+
+**Features:**
+- 🌍 **60+ Countries Supported** - Native language recognition
+- 🏛️ **Enterprise Compliance** - GDPR, CCPA, LGPD ready
+- 🌐 **Multi-language Support** - Cultural context awareness
+- ⚡ **Real-time Processing** - Aparavi DTC GPU infrastructure
+- 🔒 **Professional Security** - Enterprise-grade accuracy
+- 📦 **Tiny Bundle** - Only ~5KB
+
+**⚠️ Requires API Key:** Get your free Aparavi DTC API key at [https://bit.ly/pii-paladin-dtc](https://bit.ly/pii-paladin-dtc)
+
+### 📊 **Complete Package Comparison**
+
+| Feature | **PII-PALADIN** (This Package) | **PII-PALADIN LITE** | **PII-PALADIN INTERNATIONAL** |
+|---------|----------------------------------|----------------------|--------------------------------|
+| **Environment** | Node.js only | Browser + Node.js | Browser + Node.js |
+| **Bundle Size** | ~90MB (ML models) | ~5KB (regex only) | ~5KB (API client) |
+| **Speed** | Slower (ML inference) | Lightning fast | Fast (API calls) |
+| **Accuracy** | Highest (ML + regex) | Good (regex only) | **Enterprise-grade (Aparavi DTC)** |
+| **Setup** | Complex (model files) | Zero configuration | API key required |
+| **Use Case** | Production/accuracy | Development/speed | **Global compliance** |
+| **Countries** | US-focused | US-focused | **60+ countries** |
+| **Languages** | English | English | **15+ languages** |
+| **Compliance** | Basic | Basic | **GDPR, CCPA, LGPD** |
 
 **Choose PII-PALADIN when you need:**
 - Maximum accuracy for production
@@ -176,6 +199,13 @@ We've created a companion package specifically for browser environments: **[PII-
 - Lightning-fast performance
 - Tiny bundle size
 - Quick development setup
+
+**Choose PII-PALADIN INTERNATIONAL when you need:**
+- 🌍 Global PII detection across 60+ countries
+- 🏛️ Enterprise compliance standards
+- 🌐 Multi-language support
+- ⚡ Real-time GPU processing
+- 🔒 Professional-grade security
 
 ---
 
