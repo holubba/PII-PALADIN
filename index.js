@@ -5,6 +5,7 @@
  */
 
 import { pipeline, env } from '@xenova/transformers';
+import { filterRedundantEntities, maskSubstring, isValidEntity, isMaskCharValid, isPositiveInteger } from './utils/helpers.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -102,10 +103,12 @@ const regexPIIPatterns = [
  * @param {Object} [options] Optional configuration object.
  * @param {Object} [options] Optional configuration object.
  * @param {string} [options.maskChar='*'] A single character used to mask each censored character.
+ * @param {string} [options.maskLength='*'] A single character used to mask each censored character.
  * @returns {Promise<string>} A promise that resolves to the censored string.
  */
 export async function censorPII(input, options) {
   const maskChar = isMaskCharValid(options?.maskChar) ? options.maskChar : undefined;
+  const maskLength = isPositiveInteger(options?.maskLength) && maskChar ? options.maskLength : undefined;
   let ner;
   try {
     ner = await NerPipelineSingleton.getInstance();
@@ -241,12 +244,15 @@ export async function censorPII(input, options) {
   // This is crucial to avoid messing up indices as we replace text.
   allPiiEntities.sort((a, b) => b.start - a.start);
 
+  const filteredEntities = filterRedundantEntities(allPiiEntities)
+
   let censoredText = input;
 
   // Replace each detected PII entity with [CENSORED]
-  for (const entity of allPiiEntities) {
+  for (const entity of filteredEntities) {
     if (isValidEntity(entity)) {
-      const replacement = maskSubstring(entity.end - entity.start, maskChar)
+      const replacementLength = entity.end - entity.start
+      const replacement = maskSubstring(maskLength ?? replacementLength, maskChar)
       censoredText =
         censoredText.substring(0, entity.start) +
         replacement +
@@ -259,64 +265,3 @@ export async function censorPII(input, options) {
   return censoredText;
 }
 
-/**
- * Checks whether an entity object has valid start and end indices for text replacement.
- *
- * An entity is considered valid if:
- * - `start` and `end` are numbers
- * - `start` is greater than or equal to 0
- * - `end` is greater than `start`
- *
- * @param {{ start: number, end: number }} entity The entity object containing start and end indices.
- * @returns {boolean} `true` if the entity indices are valid, otherwise `false`.
- */
-function isValidEntity(entity) {
-  return (
-    typeof entity.start === 'number' &&
-    typeof entity.end === 'number' &&
-    entity.start >= 0 &&
-    entity.end > entity.start
-  );
-}
-
-/**
- * Generates a masking string of a given length using the specified character.
- *
- * @param {number} length The number of times to repeat the mask character.
- * @param {string} [maskChar] Optional single-character mask.
- * @returns {string} A string consisting of the mask character repeated `length` times.
- */
-function maskSubstring(length, maskChar) {
-  if (maskChar) {
-    return maskChar.repeat(length);
-  }
-  return '[CENSORED]';
-}
-
-
-/**
- * Checks whether a given string is a valid mask character.
- *
- * A valid mask character must:
- *   1. Be a string of length 1 (Unicode grapheme-safe).
- *   2. Be a visible character (not whitespace).
- *   3. Not be a control character (Unicode category C).
- *
- * Examples of valid mask characters: '*', '#', 'X', '✓'.
- * Examples of invalid mask characters: '', ' ', '\n', '\u0000'.
- *
- * @param {string} maskChar - The character to validate.
- * @returns {boolean} True if maskChar is a single, visible, non-control character; false otherwise.
- */
-function isMaskCharValid(maskChar) {
-  if (typeof maskChar !== 'string') return false;
-
-  const chars = [...maskChar]; // Unicode-safe splitting
-  if (chars.length !== 1) return false;
-
-  const c = chars[0];
-  if (c.trim() === '') return false;        // No whitespace
-  if (/\p{C}/u.test(c)) return false;      // No control chars
-
-  return true;
-}
