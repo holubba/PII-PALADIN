@@ -36,7 +36,7 @@ PII-PALADIN is a **Node.js package** designed to detect and censor Personally Id
 - **Hybrid PII Detection**: Combines the contextual understanding of an NER model for names, organizations, and locations with the precision of regex for structured PII like SSN, credit cards, emails, and phone numbers.
 - **Offline Inference**: All model and regex processing is performed locally, ensuring no internet access is required at runtime.
 - **Comprehensive Coverage**: Aims for high accuracy across a wide range of PII types.
-- **Censoring Style**: Replaces detected PII with `[CENSORED]`.
+- **Censoring and Masking Style**: Detected PII can be replaced with [CENSORED] or masked using a custom maskChar and optional maskLength. When both are provided, the user can control mask length (1–7) or preserve the original string length.
 - **Server-Side Only**: Designed specifically for Node.js environments.
 
 ---
@@ -95,17 +95,39 @@ Contact John Doe at john.doe@example.com or (123) 456-7890. He lives at 123 Main
 ```
 Contact [CENSORED] at [CENSORED] or [CENSORED]. He lives at [CENSORED], [CENSORED], and his SSN is [CENSORED].
 ```
+### Example Options/Input/Output
+
+**Options:**
+```ts
+{ maskChar: "*", maskLength: 5 }
+```
+
+**Input:**
+```
+Bob's phone number is 555-123-4567.
+```
+
+**Output:**
+```
+Bob's phone number is *****.
+```
 
 ---
 
 ## 🔧 API Reference
 
-### `censorPII(input: string): Promise<string>`
+```ts
+censorPII(input: string, options?: { maskChar?: string; maskLength?: number }): Promise<string>
+```
 
 Censors detected Personally Identifiable Information (PII) in the input string.
 
-- **`input`**: The string to be censored.
+- **`input`**: The string to be censored.  
+- **`options`** *(optional)*:  
+  - `maskChar`: Character used to mask PII. If not provided or invalid, defaults to `[CENSORED]`.  
+  - `maskLength`: Number of characters to use for masking (1–7). Only works if `maskChar` is valid. If omitted but `maskChar` is provided, the masked length matches the original PII length.  
 - **Returns**: A `Promise` that resolves to the censored string.
+
 
 ---
 
